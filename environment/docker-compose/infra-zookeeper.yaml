@@ -1,0 +1,52 @@
+---
+version: '3.4'
+
+services:
+  zookeeper1:
+    image: confluentinc/cp-zookeeper:${VERSION_CONFLUENT}
+    restart: unless-stopped
+    hostname: zookeeper1.${DOMAIN_NAME}
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_SERVERS: zookeeper1:2888:3888;zookeeper2:2888:3888;zookeeper3:2888:3888
+    networks:
+      default:
+        aliases:
+          - zookeeper
+          - zookeeper.${DOMAIN_NAME}
+          - zookeeper1.${DOMAIN_NAME}
+
+  zookeeper2:
+    image: confluentinc/cp-zookeeper:${VERSION_CONFLUENT}
+    restart: unless-stopped
+    hostname: zookeeper2.${DOMAIN_NAME}
+    environment:
+      ZOOKEEPER_SERVER_ID: 2
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_SERVERS: zookeeper1:2888:3888;zookeeper2:2888:3888;zookeeper3:2888:3888
+    networks:
+      default:
+        aliases:
+          - zookeeper
+          - zookeeper.${DOMAIN_NAME}
+          - zookeeper2.${DOMAIN_NAME}
+
+  zookeeper3:
+    image: confluentinc/cp-zookeeper:${VERSION_CONFLUENT}
+    restart: unless-stopped
+    hostname: zookeeper3.${DOMAIN_NAME}
+    environment:
+      ZOOKEEPER_SERVER_ID: 3
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_SERVERS: zookeeper1:2888:3888;zookeeper2:2888:3888;zookeeper3:2888:3888
+    networks:
+      default:
+        aliases:
+          - zookeeper
+          - zookeeper.${DOMAIN_NAME}
+          - zookeeper3.${DOMAIN_NAME}
+
+networks:
+  default:
+...

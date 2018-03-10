@@ -1,0 +1,37 @@
+---
+version: '3.4'
+
+services:
+  kafkarestproxy1:
+    image: confluentinc/cp-kafka-rest:${VERSION_CONFLUENT}
+    restart: unless-stopped
+    hostname: kafkarestproxy1.${DOMAIN_NAME}
+    environment:
+      KAFKA_REST_HOST_NAME: "kafkarestproxy1"
+      KAFKA_REST_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_REST_SCHEMA_REGISTRY_URL: "http://schemaregistry:8081"
+    networks:
+      default:
+        aliases:
+          - kafkarestproxy
+          - kafkarestproxy.${DOMAIN_NAME}
+          - kafkarestproxy1.${DOMAIN_NAME}
+
+  kafkarestproxy2:
+    image: confluentinc/cp-kafka-rest:${VERSION_CONFLUENT}
+    restart: unless-stopped
+    hostname: kafkarestproxy2.${DOMAIN_NAME}
+    environment:
+      KAFKA_REST_HOST_NAME: "kafkarestproxy2"
+      KAFKA_REST_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_REST_SCHEMA_REGISTRY_URL: "http://schemaregistry:8081"
+    networks:
+      default:
+        aliases:
+          - kafkarestproxy
+          - kafkarestproxy.${DOMAIN_NAME}
+          - kafkarestproxy2.${DOMAIN_NAME}
+
+networks:
+  default:
+...

@@ -1,0 +1,65 @@
+plugins {
+    id 'base'
+    id 'org.ajoberstar.grgit' version '2.1.0'
+}
+
+apply from: 'dependencies.gradle'
+
+task artifactDef() {
+    doLast {
+        println "${project.group}:${project.name}:${project.version}"
+    }
+}
+
+allprojects {
+    group = 'codeexamples.kafka'
+    version = grgit.describe()
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven {
+            url 'http://packages.confluent.io/maven/'
+        }
+    }
+}
+
+subprojects {
+
+    plugins.withType(JavaPlugin).whenPluginAdded {
+
+        dependencies {
+            compile 'org.slf4j:slf4j-api:1.7.25'
+            compile 'org.slf4j:log4j-over-slf4j:1.7.25'
+            compile 'org.slf4j:jcl-over-slf4j:1.7.25'
+            compile 'ch.qos.logback:logback-core:1.2.3'
+            compile 'ch.qos.logback:logback-classic:1.2.3'
+        }
+
+        configurations {
+            compile.exclude module: 'slf4j-log4j12'
+        }
+
+        configurations.all {
+            resolutionStrategy.eachDependency {
+                if (it.requested.name == 'log4j') {
+                    it.useTarget 'org.slf4j:log4j-over-slf4j:1.7.25'
+                }
+            }
+        }
+
+        compileJava {
+            sourceCompatibility = '1.9'
+            targetCompatibility = '1.9'
+            options.encoding = 'UTF-8'
+        }
+
+        compileTestJava {
+            sourceCompatibility = '1.9'
+            targetCompatibility = '1.9'
+            options.encoding = 'UTF-8'
+        }
+    }
+
+}

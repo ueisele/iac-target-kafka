@@ -1,0 +1,5 @@
+= Kafka Connector Third-Party Jars
+
+Kafka connect can be configured to use third-party jars by storing them on a volume on the host and mapping the volume to `/etc/kafka-connect/jars` on the container.
+
+see: https://docs.confluent.io/current/installation/docker/docs/operations/external-volumes.html

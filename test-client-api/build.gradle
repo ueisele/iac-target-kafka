@@ -1,0 +1,9 @@
+plugins {
+    id 'java'
+}
+
+dependencies {
+    compile "org.apache.kafka:kafka-clients:${ver.kafka}"
+    compile group: 'org.json', name: 'json', version: '20171018'
+
+}

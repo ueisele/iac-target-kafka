@@ -1,0 +1,65 @@
+= Environment
+
+== DNS
+
+The environment provides a Docker container, which provides a DNS server at port 53 for name resolution of Docker containers.
+The scripts `./tool/dns-enable.sh` adds a server entry to the `dnsmasq` service of `NetworkManager`.
+This only works, if the host has the `NetworkManager` service installed with `dnsmasq` enabled. In addition the `dnsmasq` service must be installed but disabled.
+
+./etc/NetworkManager/NetworkManager.conf
+----
+[main]
+dns=dnsmasq
+----
+
+With this configuration `NetworkManager` will automatically start `dnsmasq` and add 127.0.0.1 to `/etc/resolv.conf`.
+
+|=======================================================================================
+| Manual for NetworkManager and Dnsmasq | https://wiki.archlinux.org/index.php/dnsmasq
+|=======================================================================================
+
+== Infrastructure
+
+=== Kafka
+
+Kafka starts at its default port `9092`. JMX is available at port `9999`.
+
+=== Kafka Rest Proxy
+
+|=======================================================================================
+| GitHub        | https://github.com/confluentinc/kafka-rest
+| API Reference | https://docs.confluent.io/current/kafka-rest/docs/api.html#api-v2
+|=======================================================================================
+
+=== Kafka Connect
+
+|=======================================================================================
+| Common Rest Examples | https://docs.confluent.io/current/connect/managing.html#common-rest-examples
+| REST Reference       | https://docs.confluent.io/current/connect/restapi.html
+|=======================================================================================
+
+=== Kafka Control Center
+
+The Web Ui can be accessed at `http://confluentcontrolcenter.codeexamples.kafka:9021`.
+
+=== JMX Prometheus Exporter
+
+The JMX Prometheus exporter starts at port `9404` and provides metrics ath the path `/metrics`.
+
+|=======================================================================================
+| GitHib | https://github.com/prometheus/jmx_exporter
+|=======================================================================================
+
+=== Prometheus
+
+Prometheus starts at port `9090`. If your domain is `codeexamples.kafka` the Prometheus Web Ui can be accessed at `http://prometheus.codeexamples.kafka:9090`.
+
+|=======================================================================================
+| Storage Settings | https://prometheus.io/docs/prometheus/1.8/storage/
+| Configuration    | https://prometheus.io/docs/prometheus/1.8/configuration/configuration/
+|=======================================================================================
+
+=== Grafana
+
+Grafana starts at port `3000`. If your domain is `codeexamples.kafka` the Grafana Web Ui can be accessed at `http://grafana.codeexamples.kafka:3000`.
+The username is `admin`, and the password is also `admin`.

@@ -1,0 +1,53 @@
+= Script
+
+== Commands
+
+=== Show Offset Behavior with single Partition
+
+    environment/tool/clikafka.sh kafka-topics --zookeeper zookeeper --create --topic test --partitions 1 --replication-factor 3
+
+    environment/tool/clikafka.sh kafka-console-producer --broker-list kafka:9092 --topic test --property "parse.key=true" --property "key.separator=:"
+
+    environment/tool/clikafka.sh kafka-console-consumer --bootstrap-server kafka:9092 --topic test --property "print.key=true" --property "key.separator=:" --property "print.timestamp=true" --from-beginning
+
+== Show Offset Topic
+
+    environment/tool/clikafka.sh kafka-topics --zookeeper zookeeper --list
+
+== Show Consumer Group behaviour with two Partitions
+
+    environment/tool/clikafka.sh kafka-topics --zookeeper zookeeper --create --topic test-partitions --partitions 3 --replication-factor 3
+
+    environment/tool/clikafka.sh kafka-console-producer --broker-list kafka:9092 --topic test-partitions --property "parse.key=true" --property "key.separator=:"
+
+    environment/tool/clikafka.sh kafka-console-consumer --bootstrap-server kafka:9092 --topic test-partitions --property "print.key=true" --property "key.separator=:" --from-beginning --group testA
+
+== Show Consumer Group Offsets
+
+    environment/tool/clikafka.sh kafka-consumer-groups --bootstrap-server kafka:9092 --group testA --describe
+
+== Reset Consumer Offset by Timestamp
+
+    environment/tool/clikafka.sh kafka-consumer-groups --bootstrap-server kafka:9092 --group testA --execute --reset-offsets --all-topics --to-datetime "2017-12-22T08:30:00.000"
+
+== Kafka Connect
+
+    seq 1000 > environment/volumes/infra/kafkaconnect/work/input.txt
+
+    curl -s -X POST -H "Content-Type: application/json" --data '{"name": "quickstart-file-source", "config": {"connector.class":"org.apache.kafka.connect.file.FileStreamSourceConnector", "tasks.max":"1", "topic":"test-connect-file", "file": "/work/input.txt"}}' http://kafkaconnect.codeexamples.kafka:8083/connectors
+
+    environment/tool/clikafka.sh kafka-console-consumer --bootstrap-server kafka:9092 --topic test-connect-file --from-beginning
+
+    curl -X POST -H "Content-Type: application/json" --data '{"name": "quickstart-file-sink", "config": {"connector.class":"org.apache.kafka.connect.file.FileStreamSinkConnector", "tasks.max":"1", "topics":"test-connect-file", "file": "/work/output.txt"}}' http://kafkaconnect.codeexamples.kafka:8083/connectors
+
+== Under Replicated Partitions
+
+    environment/docker-compose.sh stop kafka2
+
+    environment/tool/clikafka.sh kafka-topics --zookeeper zookeeper --describe --under-replicated-partitions
+
+    environment/tool/clikafka.sh kafka-console-producer --broker-list kafka:9092 --topic test-partitions --property "parse.key=true" --property "key.separator=:" --request-required-acks all
+
+    environment/tool/clikafka.sh kafka-console-consumer --bootstrap-server kafka:9092 --topic test-partitions --property "print.key=true" --property "key.separator=:" --from-beginning --group testB
+
+    environment/docker-compose.sh start kafka2

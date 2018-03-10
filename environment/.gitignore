@@ -1,0 +1,4 @@
+/docker-compose/.env
+/volumes/infra/kafkaconnect/connectors/*.jar
+/volumes/infra/prometheus/prometheus.yaml
+/config/infra/grafana/datasource/prometheus.json

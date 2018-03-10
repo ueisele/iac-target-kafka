@@ -1,0 +1,19 @@
+---
+version: '3.4'
+
+services:
+  grafana:
+    image: grafana/grafana:latest
+    restart: unless-stopped
+    hostname: grafana.${DOMAIN_NAME}
+    environment:
+      GF_SERVER_ROOT_URL: http://grafana.${DOMAIN_NAME}
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    networks:
+      default:
+        aliases:
+          - grafana.${DOMAIN_NAME}
+
+networks:
+  default:
+...

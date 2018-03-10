@@ -1,0 +1,28 @@
+---
+version: '3.4'
+
+services:
+  toolclinet:
+    build: ./tool/cli/net
+    image: tool-cli-net
+
+  toolclizk:
+    image: confluentinc/cp-zookeeper:${VERSION_CONFLUENT}
+    entrypoint:
+      - zookeeper-shell
+      - zookeeper
+
+  toolclikafka:
+    image: confluentinc/cp-kafka:${VERSION_CONFLUENT}
+
+  toolclischemaregistry:
+    image: confluentinc/cp-schema-registry:${VERSION_CONFLUENT}
+
+  dns:
+    image: andyshinn/dnsmasq
+    restart: unless-stopped
+    command: -d
+
+networks:
+  default:
+...

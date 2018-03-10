@@ -1,0 +1,10 @@
+ext {
+
+    ver = [
+            avro      : '1.8.2',
+            kafka     : '1.0.1',
+            confluent : '4.0.0',
+            springboot: '1.5.9.RELEASE'
+    ]
+
+}

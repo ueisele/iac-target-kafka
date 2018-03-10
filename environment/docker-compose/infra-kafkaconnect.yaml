@@ -1,0 +1,135 @@
+---
+version: '3.4'
+
+services:
+  kafkaconnect1:
+    image: confluentinc/cp-kafka-connect:${VERSION_CONFLUENT}
+    restart: unless-stopped
+    hostname: kafkaconnect1.${DOMAIN_NAME}
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: 'kafka:9092'
+      CONNECT_REST_ADVERTISED_HOST_NAME: "kafkaconnect1.${DOMAIN_NAME}"
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: connect-group
+      CONNECT_CONFIG_STORAGE_TOPIC: connect-configs
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_OFFSET_STORAGE_TOPIC: connect-offsets
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_STATUS_STORAGE_TOPIC: connect-status
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_KEY_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schemaregistry:8081'
+      CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schemaregistry1:8081'
+      CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+    volumes:
+      - ../volumes/infra/kafkaconnect/connectors:/etc/kafka-connect/jars
+      - ../volumes/infra/kafkaconnect/work:/work
+    networks:
+      default:
+        aliases:
+          - kafkaconnect
+          - kafkaconnect.${DOMAIN_NAME}
+          - kafkaconnect1.${DOMAIN_NAME}
+
+  kafkaconnect2:
+    image: confluentinc/cp-kafka-connect:${VERSION_CONFLUENT}
+    restart: unless-stopped
+    hostname: kafkaconnect2.${DOMAIN_NAME}
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: 'kafka:9092'
+      CONNECT_REST_ADVERTISED_HOST_NAME: "kafkaconnect2.${DOMAIN_NAME}"
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: connect-group
+      CONNECT_CONFIG_STORAGE_TOPIC: connect-configs
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_OFFSET_STORAGE_TOPIC: connect-offsets
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_STATUS_STORAGE_TOPIC: connect-status
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_KEY_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schemaregistry:8081'
+      CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schemaregistry1:8081'
+      CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+    volumes:
+      - ../volumes/infra/kafkaconnect/connectors:/etc/kafka-connect/jars
+      - ../volumes/infra/kafkaconnect/work:/work
+    networks:
+      default:
+        aliases:
+          - kafkaconnect
+          - kafkaconnect.${DOMAIN_NAME}
+          - kafkaconnect2.${DOMAIN_NAME}
+
+  kafkaconnect3:
+    image: confluentinc/cp-kafka-connect:${VERSION_CONFLUENT}
+    restart: unless-stopped
+    hostname: kafkaconnect3.${DOMAIN_NAME}
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: 'kafka:9092'
+      CONNECT_REST_ADVERTISED_HOST_NAME: "kafkaconnect3.${DOMAIN_NAME}"
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: connect-group
+      CONNECT_CONFIG_STORAGE_TOPIC: connect-configs
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_OFFSET_STORAGE_TOPIC: connect-offsets
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_STATUS_STORAGE_TOPIC: connect-status
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_KEY_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schemaregistry:8081'
+      CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schemaregistry1:8081'
+      CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+    volumes:
+      - ../volumes/infra/kafkaconnect/connectors:/etc/kafka-connect/jars
+      - ../volumes/infra/kafkaconnect/work:/work
+    networks:
+      default:
+        aliases:
+          - kafkaconnect
+          - kafkaconnect.${DOMAIN_NAME}
+          - kafkaconnect3.${DOMAIN_NAME}
+
+  kafkaconnect4:
+    image: confluentinc/cp-kafka-connect:${VERSION_CONFLUENT}
+    restart: unless-stopped
+    hostname: kafkaconnect4.${DOMAIN_NAME}
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: 'kafka:9092'
+      CONNECT_REST_ADVERTISED_HOST_NAME: "kafkaconnect4.${DOMAIN_NAME}"
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: connect-group
+      CONNECT_CONFIG_STORAGE_TOPIC: connect-configs
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_OFFSET_STORAGE_TOPIC: connect-offsets
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_STATUS_STORAGE_TOPIC: connect-status
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_KEY_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schemaregistry:8081'
+      CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schemaregistry1:8081'
+      CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+    volumes:
+      - ../volumes/infra/kafkaconnect/connectors:/etc/kafka-connect/jars
+      - ../volumes/infra/kafkaconnect/work:/work
+    networks:
+      default:
+        aliases:
+          - kafkaconnect
+          - kafkaconnect.${DOMAIN_NAME}
+          - kafkaconnect4.${DOMAIN_NAME}
+
+networks:
+  default:
+...

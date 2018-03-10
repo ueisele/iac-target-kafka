@@ -1,0 +1,5 @@
+= Kafka Connect Work Directory
+
+This directory is mounted as `/work` in the `Kafka Connect` Docker containers.
+
+see: https://docs.confluent.io/current/connect/quickstart.html

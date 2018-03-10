@@ -1,0 +1,20 @@
+---
+version: '3.4'
+
+services:
+  prometheus:
+    image: prom/prometheus:v1.8.2
+    restart: unless-stopped
+    hostname: prometheus.${DOMAIN_NAME}
+    volumes:
+      - ../volumes/infra/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml
+    command:
+      - -config.file=/etc/prometheus/prometheus.yaml
+    networks:
+      default:
+        aliases:
+          - prometheus.${DOMAIN_NAME}
+
+networks:
+  default:
+...

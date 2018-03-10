@@ -1,0 +1,32 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+task buildEnvFromTmpl(type: Copy) {
+    from('./docker-compose/.tmpl.env')
+    filter(ReplaceTokens, tokens: [PROJECT_NAME: project.group.replace('.','')])
+    filter(ReplaceTokens, tokens: [DOMAIN_NAME: project.group])
+    filter(ReplaceTokens, tokens: [VERSION_KAFKA: ver.kafka])
+    filter(ReplaceTokens, tokens: [VERSION_CONFLUENT: ver.confluent])
+    rename('.tmpl.env', '.env')
+    destinationDir file('./docker-compose/')
+}
+
+task buildPrometheusConfigFromTmpl(type: Copy) {
+    from('./volumes/infra/prometheus/prometheus.tmpl.yaml')
+    filter(ReplaceTokens, tokens: [DOMAIN_NAME: project.group])
+    rename('prometheus.tmpl.yaml', 'prometheus.yaml')
+    destinationDir file('./volumes/infra/prometheus/')
+}
+
+task buildGrafanaConfigFromTmpl(type: Copy) {
+    from('./config/infra/grafana/datasource/prometheus.tmpl.json')
+    filter(ReplaceTokens, tokens: [DOMAIN_NAME: project.group])
+    rename('prometheus.tmpl.json', 'prometheus.json')
+    destinationDir file('./config/infra/grafana/datasource/')
+}
+
+
+task build {
+    dependsOn buildEnvFromTmpl
+    dependsOn buildPrometheusConfigFromTmpl
+    dependsOn buildGrafanaConfigFromTmpl
+}
