@@ -40,7 +40,7 @@ Kafka starts at its default port `9092`. JMX is available at port `9999`.
 
 === Kafka Control Center
 
-The Web Ui can be accessed at `http://confluentcontrolcenter.codeexamples.kafka:9021`.
+The Web Ui can be accessed at `http://confluentcontrolcenter.iac.target.kafka:9021`.
 
 === JMX Prometheus Exporter
 
@@ -52,7 +52,7 @@ The JMX Prometheus exporter starts at port `9404` and provides metrics ath the p
 
 === Prometheus
 
-Prometheus starts at port `9090`. If your domain is `codeexamples.kafka` the Prometheus Web Ui can be accessed at `http://prometheus.codeexamples.kafka:9090`.
+Prometheus starts at port `9090`. If your domain is `iac.target.kafka` the Prometheus Web Ui can be accessed at `http://prometheus.iac.target.kafka:9090`.
 
 |=======================================================================================
 | Storage Settings | https://prometheus.io/docs/prometheus/1.8/storage/
@@ -61,5 +61,5 @@ Prometheus starts at port `9090`. If your domain is `codeexamples.kafka` the Pro
 
 === Grafana
 
-Grafana starts at port `3000`. If your domain is `codeexamples.kafka` the Grafana Web Ui can be accessed at `http://grafana.codeexamples.kafka:3000`.
+Grafana starts at port `3000`. If your domain is `iac.target.kafka` the Grafana Web Ui can be accessed at `http://grafana.iac.target.kafka:3000`.
 The username is `admin`, and the password is also `admin`.
