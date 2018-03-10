@@ -12,7 +12,7 @@ task artifactDef() {
 }
 
 allprojects {
-    group = 'codeexamples.kafka'
+    group = 'iac.target.kafka'
     version = grgit.describe()
 
     repositories {
