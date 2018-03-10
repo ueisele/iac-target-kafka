@@ -50,14 +50,14 @@ subprojects {
         }
 
         compileJava {
-            sourceCompatibility = '1.9'
-            targetCompatibility = '1.9'
+            sourceCompatibility = '1.8'
+            targetCompatibility = '1.8'
             options.encoding = 'UTF-8'
         }
 
         compileTestJava {
-            sourceCompatibility = '1.9'
-            targetCompatibility = '1.9'
+            sourceCompatibility = '1.8'
+            targetCompatibility = '1.8'
             options.encoding = 'UTF-8'
         }
     }

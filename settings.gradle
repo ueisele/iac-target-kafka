@@ -1,4 +1,2 @@
 rootProject.name = 'iac-target-kafka'
 include 'environment'
-include 'test-client-api'
-

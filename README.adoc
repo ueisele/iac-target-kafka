@@ -1,1 +1,5 @@
-= Kafka Code Examples
+= IAC Target: Kafka
+
+Docker environment with Confluent Platform, Prometheus and Grafana.
+
+Detailed information about the platform are given in the link:environment/README.adoc[environment documentation].
