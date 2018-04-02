@@ -1,8 +1,8 @@
 ext {
 
     ver = [
-            kafka     : '1.0.1',
-            confluent : '4.0.0'
+            kafka     : '0.11.0.2',
+            confluent : '3.3.1'
     ]
 
 }

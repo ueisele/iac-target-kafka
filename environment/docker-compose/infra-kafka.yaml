@@ -14,6 +14,7 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: 2
       KAFKA_DEFAULT_REPLICATION_FACTOR: 3
       KAFKA_OFFSET_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
       KAFKA_JMX_PORT: 9999
       KAFKA_JMX_HOSTNAME: "kafka1.${DOMAIN_NAME}"
     networks:
@@ -55,6 +56,7 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: 2
       KAFKA_DEFAULT_REPLICATION_FACTOR: 3
       KAFKA_OFFSET_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
       KAFKA_JMX_PORT: 9999
       KAFKA_JMX_HOSTNAME: "kafka2.${DOMAIN_NAME}"
     networks:
@@ -96,6 +98,7 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: 2
       KAFKA_DEFAULT_REPLICATION_FACTOR: 3
       KAFKA_OFFSET_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
       KAFKA_JMX_PORT: 9999
       KAFKA_JMX_HOSTNAME: "kafka3.${DOMAIN_NAME}"
     networks:
@@ -137,6 +140,7 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: 2
       KAFKA_DEFAULT_REPLICATION_FACTOR: 3
       KAFKA_OFFSET_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
       KAFKA_JMX_PORT: 9999
       KAFKA_JMX_HOSTNAME: "kafka4.${DOMAIN_NAME}"
     networks:
@@ -165,6 +169,48 @@ services:
           - kafkaprometheusexporter
           - kafkaprometheusexporter.${DOMAIN_NAME}
           - kafka4prometheusexporter.${DOMAIN_NAME}
+
+  kafka5:
+    image: confluentinc/cp-kafka:${VERSION_CONFLUENT}
+    restart: unless-stopped
+    hostname: kafka5.${DOMAIN_NAME}
+    environment:
+      KAFKA_BROKER_ID: 5
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka5.${DOMAIN_NAME}:9092"
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: "false"
+      KAFKA_MIN_INSYNC_REPLICAS: 2
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_OFFSET_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      KAFKA_JMX_PORT: 9999
+      KAFKA_JMX_HOSTNAME: "kafka5.${DOMAIN_NAME}"
+    networks:
+      default:
+        aliases:
+          - kafka
+          - kafka.${DOMAIN_NAME}
+          - kafka5.${DOMAIN_NAME}
+  kafka5prometheusexporter:
+    build:
+      context: ./infra/jmx-prometheus-exporter/
+      args:
+        VERSION: ${VERSION_JMX_PROMETHEUS_EXPORTER}
+        CHECKSUM_SHA1: ${SHA1_JMX_PROMETHEUS_EXPORTER}
+    image: jmx-prometheus-exporter:${VERSION_JMX_PROMETHEUS_EXPORTER}
+    restart: unless-stopped
+    hostname: kafka5prometheusexporter.${DOMAIN_NAME}
+    environment:
+      EXPORTER_PORT: 9404
+      HOST_PORT: kafka5:9999
+    volumes:
+      - ../volumes/infra/jmx-prometheus-exporter/kafka/rules.yaml:/etc/JmxPrometheusExporter/rules.yaml
+    networks:
+      default:
+        aliases:
+          - kafkaprometheusexporter
+          - kafkaprometheusexporter.${DOMAIN_NAME}
+          - kafka5prometheusexporter.${DOMAIN_NAME}
 
 networks:
   default:

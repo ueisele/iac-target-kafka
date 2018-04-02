@@ -8,9 +8,9 @@ function main () {
     ./infra/up-kafka.sh
     sleep 5
     ./infra/up-schemaregistry.sh
-    ./infra/up-kafkarestproxy.sh
-    ./infra/up-kafkaconnect.sh
-    ./infra/up-confluentcontrolcenter.sh
+    #./infra/up-kafkarestproxy.sh
+    #./infra/up-kafkaconnect.sh
+    #./infra/up-confluentcontrolcenter.sh
     ./infra/up-prometheus.sh
     ./infra/up-grafana.sh
 
